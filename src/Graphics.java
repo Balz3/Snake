@@ -5,15 +5,16 @@ import java.awt.event.ActionListener;
 
 public class Graphics extends JPanel implements ActionListener {
     private Timer timer = new Timer(100, this);
-    public String screenState;
+    public enum SState {START, PLAY, END};
 
+    public SState screenState;
     private Snake snake;
     private Food food;
     private Game game;
 
     public Graphics(Game game) {
         timer.start();
-        screenState = "START";
+        screenState = SState.START;
 
         this.game = game;
         snake = game.getPlayer();
@@ -32,11 +33,11 @@ public class Graphics extends JPanel implements ActionListener {
         graphics2D.setColor(Color.BLACK);
         graphics2D.fillRect(0, 0, Game.width * Game.dimension, Game.height * Game.dimension);
 
-        if(screenState == "START"){
+        if(screenState == SState.START){
             graphics2D.setColor(Color.WHITE);
             graphics2D.drawString("Press Any Key to Start!", Game.width/2 * Game.dimension - 40, Game.height/2 * Game.dimension - 20);
 
-        } else if(screenState == "RUNNING"){
+        } else if(screenState == SState.PLAY){
             graphics2D.setColor(Color.RED);
             graphics2D.fillRect(food.getX() * Game.dimension, food.getY() * Game.dimension, Game.dimension, Game.dimension);
 
@@ -45,7 +46,7 @@ public class Graphics extends JPanel implements ActionListener {
             for(Rectangle rectangle: snake.getBody()){
                 graphics2D.fill(rectangle);
             }
-        } else if(screenState == "END"){
+        } else if(screenState == SState.END){
             graphics2D.setColor(Color.WHITE);
             graphics2D.drawString("Your Score: " + (snake.getBody().size() - 3), Game.width/2 * Game.dimension - 40, Game.height/2 * Game.dimension - 20);
         }

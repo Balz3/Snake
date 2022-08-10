@@ -30,17 +30,17 @@ public class Game implements KeyListener {
     }
 
     public void start(){
-        graphics.screenState = "RUNNING";
+        graphics.screenState = Graphics.SState.PLAY;
     }
 
     public void manageGame(){
-        if(graphics.screenState == "RUNNING"){
+        if(graphics.screenState == Graphics.SState.PLAY){
             if(checkFoodCollision()){
                 player.grow();
                 food.randomSpawn(player);
 
             } else if(checkWallCollision() || checkSelfCollision()){
-                graphics.screenState = "END";
+                graphics.screenState = Graphics.SState.END;
 
             } else {
                 player.move();
@@ -86,10 +86,10 @@ public class Game implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
 
-        if(graphics.screenState == "RUNNING") {
+        if(graphics.screenState == Graphics.SState.PLAY) {
             if (keyCode == KeyEvent.VK_W && player.getDirection() != Snake.Direction.DOWN) {
                 player.setDirection(Snake.Direction.UP);
-            } else if (keyCode == KeyEvent.VK_A && player.getDirection() != Snake.Direction.RIGHT) {
+            } else if (keyCode == KeyEvent.VK_A && player.getDirection() != Snake.Direction.RIGHT && player.getDirection() != null) {
                 player.setDirection(Snake.Direction.LEFT);
             } else if (keyCode == KeyEvent.VK_S && player.getDirection() != Snake.Direction.UP) {
                 player.setDirection(Snake.Direction.DOWN);
